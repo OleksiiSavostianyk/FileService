@@ -1,0 +1,30 @@
+
+
+services:
+  app:
+    image: filemanager:0.0.3.A
+    container_name: FileManagerContainer
+    environment:
+      RDS_HOSTNAME: postgres-container
+      RDS_PORT: 5432
+      RDS_DB_NAME: mydatabase
+      RDS_USERNAME: postgres
+      RDS_PASSWORD: root
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+
+
+
+
+
+
+
+
+
+
