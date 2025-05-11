@@ -13,8 +13,10 @@ public interface FileServiceFacadeInterface {
 
     void updateFile(MultipartFile multipartFile);
 
-    Optional<FileEntity> findFileById(long fileId);
+    FileEntity findFileById(long fileId);
 
+
+    FileEntity findByFileName(String fileName);
 
 
 

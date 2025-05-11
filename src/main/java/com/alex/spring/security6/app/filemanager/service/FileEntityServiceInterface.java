@@ -14,9 +14,9 @@ public interface FileEntityServiceInterface {
 
     void updateFile(MultipartFile file);
 
-    Optional<FileEntity> findById(Long id);
+    FileEntity  findById(Long id);
 
-    Optional<FileEntity> findByFileName(String fileName);
+    FileEntity findByFileName(String fileName);
 
 
 }

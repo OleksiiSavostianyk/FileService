@@ -59,13 +59,10 @@ public class FileEntityService implements FileEntityServiceInterface  {
     @Override
     public void updateFile(MultipartFile file) {
         String name = file.getOriginalFilename();
-        Optional<FileEntity> dbFile = findByFileName(name);
-        if (dbFile.isEmpty()) {
-            throw new FileNotFoundException("File not found");
-        }
+
 
         try {
-            FileEntity fileEntity = dbFile.get();
+            FileEntity fileEntity  = findByFileName(name);
             byte[] bytes = file.getBytes();
             fileEntity.setFileData(bytes);
             fileRepository.save(fileEntity);
@@ -78,14 +75,21 @@ public class FileEntityService implements FileEntityServiceInterface  {
     }
 
     @Override
-    public Optional<FileEntity> findById(Long id) {
-        //todo
-      return fileRepository.findById(id);
+    public FileEntity findById(Long id) {
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileNotFoundException("File not found with id: " + id + " "));
+
     }
 
     @Override
-    public Optional<FileEntity> findByFileName(String fileName) {
-        return fileRepository.findByFileName(fileName);
+    public FileEntity findByFileName(String fileName) {
+        return fileRepository.findByFileName(fileName)
+                .orElseThrow(() -> new FileNotFoundException("File not found with name: " + fileName + " "));
     }
+
+
+
+
+
 
 }

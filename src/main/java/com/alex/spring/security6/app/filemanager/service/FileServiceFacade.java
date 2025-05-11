@@ -41,13 +41,17 @@ public void updateFile(MultipartFile multipartFile) {
 }
 
 @Override
-public Optional<FileEntity> findFileById(long fileId) {
+public FileEntity findFileById(long fileId) {
   return   fileEntityServiceInterface.findById(fileId);
 }
 
 
 
 
+   @Override
+    public FileEntity findByFileName(String fileName) {
+    return fileEntityServiceInterface.findByFileName(fileName);
+    }
 
 
 
@@ -55,7 +59,8 @@ public Optional<FileEntity> findFileById(long fileId) {
 
 
 
-@Override
+
+    @Override
 public FileResponseDTO getResponseFileDTO(long id) {
     return fileResponseServiceInterface.getFileResponseDTO(id);
 }

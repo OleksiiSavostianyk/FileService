@@ -1,22 +1,24 @@
 package com.alex.spring.security6.app.filemanager.controller;
 
+import com.alex.spring.security6.app.filemanager.model.FileEntity;
 import com.alex.spring.security6.app.filemanager.service.FileServiceFacadeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpHeaders;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.IllegalFormatCodePointException;
+
 
 
 @RestController
 @RequestMapping("/files")
 public class FileController {
 
-    private FileServiceFacadeInterface fileServiceFacade;
+    private final FileServiceFacadeInterface fileServiceFacade;
 
 
    @Autowired
@@ -65,7 +67,21 @@ public class FileController {
     }
 
 
+    @GetMapping("/download/name/{name}")
+    public ResponseEntity<byte[]> downloadFileByName(@PathVariable String name) {
+        FileEntity file = fileServiceFacade.findByFileName(name);
+
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(file.getFileData());
+    }
+
+    }
 
 
 
-}
+
+
+

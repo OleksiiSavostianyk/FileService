@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: filemanager:0.0.3.A
+    image: filemanager:0.0.7.A
     container_name: FileManagerContainer
     environment:
       RDS_HOSTNAME: postgres-container
