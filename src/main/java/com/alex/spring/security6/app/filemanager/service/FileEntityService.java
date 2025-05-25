@@ -8,6 +8,7 @@ import com.alex.spring.security6.app.filemanager.repository.FileRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class FileEntityService implements FileEntityServiceInterface  {
 
 
     @Override
+    @Transactional
     public void uploadFile(MultipartFile file) {
 
         Optional<FileEntity> fileEntityDB = fileRepository.findByFileName(file.getOriginalFilename());
@@ -51,12 +53,14 @@ public class FileEntityService implements FileEntityServiceInterface  {
     }
 
     @Override
+    @Transactional
     public void deleteFile(Long id) {
         fileRepository.deleteById(id);
 
     }
 
     @Override
+    @Transactional
     public void updateFile(MultipartFile file) {
         String name = file.getOriginalFilename();
 
@@ -77,6 +81,7 @@ public class FileEntityService implements FileEntityServiceInterface  {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FileEntity findById(Long id) {
         return fileRepository.findById(id)
                 .orElseThrow(() -> new FileNotFoundException("File not found with id: " + id + " "));
@@ -84,6 +89,7 @@ public class FileEntityService implements FileEntityServiceInterface  {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FileEntity findByFileName(String fileName) {
         return fileRepository.findByFileName(fileName)
                 .orElseThrow(() -> new FileNotFoundException("File not found with name: " + fileName + " "));

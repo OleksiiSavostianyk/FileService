@@ -2,8 +2,11 @@ package com.alex.spring.security6.app.filemanager.controller;
 
 import com.alex.spring.security6.app.filemanager.exception.FileNotFoundException;
 import com.alex.spring.security6.app.filemanager.exception.FileSaveException;
+import org.apache.catalina.Engine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,4 +27,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleOtherExceptions(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error: " + ex.getMessage());
     }
+}
+
+@Service
+class Car {
+    private  Engine engine;
+
+    @Autowired
+    public  void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+
 }
