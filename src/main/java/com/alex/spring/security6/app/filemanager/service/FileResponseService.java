@@ -19,6 +19,9 @@ public class FileResponseService implements FileResponseServiceInterface{
 
 
 
+
+    
+
         @Override
         @Transactional(readOnly = true)
         public FileResponseDTO getFileResponseDTO(long fileId) {
