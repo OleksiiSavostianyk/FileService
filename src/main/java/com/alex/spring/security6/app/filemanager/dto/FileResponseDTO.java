@@ -1,9 +1,7 @@
 package com.alex.spring.security6.app.filemanager.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -13,8 +11,10 @@ import java.util.Objects;
 public class FileResponseDTO {
     private String fileName;
     private String fileType;
-    private String fileSize;
+    private int fileSize;
     private String uploadDate;
+
+
 
     @Override
     public boolean equals(Object o) {

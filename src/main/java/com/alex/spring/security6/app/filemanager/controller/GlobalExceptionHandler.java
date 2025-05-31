@@ -29,14 +29,7 @@ public class GlobalExceptionHandler {
     }
 }
 
-@Service
-class Car {
-    private  Engine engine;
-
-    @Autowired
-    public  void setEngine(Engine engine) {
-        this.engine = engine;
-    }
 
 
-}
+
+
