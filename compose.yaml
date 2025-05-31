@@ -14,7 +14,7 @@ services:
       - my-network
 
   app:
-    image: filemanager:0.0.7.A
+    image: filemanager:1.0.0.R
     container_name: FileManagerContainer
     environment:
       RDS_HOSTNAME: postgres

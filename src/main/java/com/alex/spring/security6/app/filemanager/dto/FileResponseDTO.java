@@ -6,7 +6,6 @@ import lombok.*;
 import java.util.Objects;
 
 @Data
-@Builder(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileResponseDTO {
