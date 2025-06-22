@@ -35,27 +35,6 @@ networks:
 
 
 
-#
-#services:
-#  app:
-#    image: filemanager:0.0.7.A
-#    container_name: FileManagerContainer
-#    environment:
-#      RDS_HOSTNAME: localhost
-#      RDS_PORT: 5432
-#      RDS_DB_NAME: my-postgres
-#      RDS_USERNAME: postgres
-#      RDS_PASSWORD: root
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - my-network
-#
-#networks:
-#  my-network:
-#    driver: bridge
-
-
 
 
 
