@@ -1,0 +1,105 @@
+package com.alex.spring.app.file.manager.service;
+
+import com.alex.spring.app.file.manager.exceptions.FileNotFoundException;
+import com.alex.spring.app.file.manager.exceptions.FileSaveException;
+import com.alex.spring.app.file.manager.model.FileEntity;
+import com.alex.spring.app.file.manager.repository.FileRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Optional;
+
+@Service
+public class FileEntityService implements FileEntityServiceInterface  {
+
+    private final FileRepository fileRepository;
+
+    @Autowired
+    public FileEntityService(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
+    }
+
+
+
+
+    @Override
+    @Transactional
+    public void uploadFile(MultipartFile file) {
+
+        Optional<FileEntity> fileEntityDB = fileRepository.findByFileName(file.getOriginalFilename());
+
+        if (fileEntityDB.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                String fileName = file.getOriginalFilename();
+                String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+
+
+                FileEntity fileEntity = new FileEntity(fileName, fileType, bytes);
+                fileRepository.save(fileEntity);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to save the file", e);
+            }
+        } else {
+            updateFile(file);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteFile(Long id) {
+        fileRepository.deleteById(id);
+
+    }
+
+    @Override
+    @Transactional
+    public void updateFile(MultipartFile file) {
+        String name = file.getOriginalFilename();
+
+
+        try {
+            FileEntity fileEntity  = findByFileName(name);
+            byte[] bytes = file.getBytes();
+            fileEntity.setFileData(bytes);
+            fileRepository.save(fileEntity);
+
+        } catch (IOException e) {
+            throw new FileSaveException("Failed to save the file:  " + e.getMessage() );
+        }
+
+
+
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FileEntity findById(Long id) {
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileNotFoundException("File not found with id: " + id + " "));
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FileEntity findByFileName(String fileName) {
+        return fileRepository.findByFileName(fileName)
+                .orElseThrow(() -> new FileNotFoundException("File not found with name: " + fileName + " "));
+    }
+
+
+
+
+
+
+
+
+
+
+}
