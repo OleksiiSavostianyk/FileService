@@ -120,7 +120,7 @@ class FileControllerTest {
 
         String fileName = "missing.txt";
         when(fileServiceFacade.findByFileName(fileName)).thenThrow(new RuntimeException("File not found"));
-
+ 
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             fileController.downloadFileByName(fileName);
